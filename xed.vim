@@ -13,9 +13,9 @@ set path+=**
 set wildmenu
 set autoread
 au CursorHold * checktime
-
 filetype plugin indent on
 
+" themes
 syntax on
 colorscheme onedark
 
@@ -27,17 +27,30 @@ let g:netrw_winsize = 22
 let g:netrw_liststyle = 3
 
 " plugins
-let $xedpcmd = 'readlink -f "/usr/bin/xed" | sed "s/\(.*\)\/.*/\1/"'
-let $xedp = system($xedpcmd)
-let mpwd = '$xedp/plugged'
-let mgocode = '$xedp/plugged/gocode/nvim/symlink.sh'
+let xedp = systemlist('readlink -f "/usr/bin/xed" | sed "s/\(.*\)\/.*/\1/"')[0]
+let mpwd = xedp . '/plugged'
+let mgocode = xedp . '/plugged/gocode/nvim/symlink.sh'
 call plug#begin(mpwd)
+  Plug 'itchyny/lightline.vim'
+
+  " autocomplete
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  
   " go
   Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': mgocode } 
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-go', { 'do': 'make'}
   Plug 'fatih/vim-go'
+
+  " ts
+  Plug 'mhartington/nvim-typescript'
+  Plug 'HerringtonDarkholme/yats.vim'
+
 call plug#end()
+
+" statusbar themes
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ }
 
 " commands
 command! -register MakeTags !ctags -R .
