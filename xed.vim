@@ -63,6 +63,10 @@ let g:go_fmt_command = "goimports"
 let g:go_term_mode = "split"
 let g:go_metalinter_autosave = 1
 
+" Fixes: https://github.com/neovim/neovim/issues/5990
+let $VTE_VERSION="100"
+set guicursor=
+
 " Workspaces
 function! DevWorkspace()
   let g:netrw_list_hide = netrw_gitignore#Hide()
