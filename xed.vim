@@ -12,6 +12,7 @@ set number
 set path+=**
 set wildmenu
 set autoread
+set noshowmode
 au CursorHold * checktime
 filetype plugin indent on
 
@@ -45,12 +46,15 @@ call plug#begin(mpwd)
   Plug 'mhartington/nvim-typescript'
   Plug 'HerringtonDarkholme/yats.vim'
 
-call plug#end()
+  " sql
+  Plug 'vim-scripts/dbext.vim'
 
-" statusbar themes
-let g:lightline = {
-      \ 'colorscheme': 'onedark',
-      \ }
+  " html / css
+  Plug 'mattn/emmet-vim'
+
+  " cshtml
+  Plug 'adamclerk/vim-razor'
+call plug#end()
 
 " commands
 command! -register MakeTags !ctags -R .
@@ -66,6 +70,10 @@ let g:go_metalinter_autosave = 1
 " Fixes: https://github.com/neovim/neovim/issues/5990
 let $VTE_VERSION="100"
 set guicursor=
+
+" emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,cshtml EmmetInstall
 
 " Workspaces
 function! DevWorkspace()
