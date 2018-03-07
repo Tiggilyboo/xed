@@ -2,7 +2,8 @@ if &compatible
   set nocompatible
 endif
 
-set rtp^=.
+let xedp = systemlist('readlink -f "/usr/bin/xed" | sed "s/\(.*\)\/.*/\1/"')[0]
+set rtp^=xedp
 set noswapfile
 set tabstop=2
 set shiftwidth=2
@@ -13,12 +14,10 @@ set path+=**
 set wildmenu
 set autoread
 set noshowmode
+set encoding=utf-8
 au CursorHold * checktime
+filetype plugin on
 filetype plugin indent on
-
-" themes
-syntax on
-colorscheme onedark
 
 " netrw
 let g:netrw_banner = 0
@@ -28,33 +27,59 @@ let g:netrw_winsize = 22
 let g:netrw_liststyle = 3
 
 " plugins
-let xedp = systemlist('readlink -f "/usr/bin/xed" | sed "s/\(.*\)\/.*/\1/"')[0]
 let mpwd = xedp . '/plugged'
 let mgocode = xedp . '/plugged/gocode/nvim/symlink.sh'
 call plug#begin(mpwd)
-  Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'joshdick/onedark.vim'
+  Plug 'KriiV/airline-onedark.vim'
 
   " autocomplete
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   
+  " git
+  Plug 'tpope/vim-fugitive'
+
   " go
   Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': mgocode } 
   Plug 'zchee/deoplete-go', { 'do': 'make'}
-  Plug 'fatih/vim-go'
+  Plug 'fatih/vim-go', { 'for': 'go' }
+  "Plug 'sebdah/vim-delve', { 'for': 'go' }
 
   " ts
   Plug 'mhartington/nvim-typescript'
   Plug 'HerringtonDarkholme/yats.vim'
 
   " sql
-  Plug 'vim-scripts/dbext.vim'
+  Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 
   " html / css
-  Plug 'mattn/emmet-vim'
+  Plug 'mattn/emmet-vim', { 'for': ['html','htm','css','scss'] }
 
   " cshtml
-  Plug 'adamclerk/vim-razor'
+  Plug 'adamclerk/vim-razor', { 'for': ['cshtml'] }
 call plug#end()
+
+" themes
+syntax on
+colorscheme onedark
+
+" vim-airline
+let g:airline_theme='onedark'
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline_symbols = {}
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+let g:airline_detect_whitespace=0
+let g:airline_section_warning=''
 
 " commands
 command! -register MakeTags !ctags -R .
@@ -66,6 +91,9 @@ let g:deoplete#enable_at_startup = 1
 let g:go_fmt_command = "goimports"
 let g:go_term_mode = "split"
 let g:go_metalinter_autosave = 1
+
+" delve
+let g:delve_new_command = "new"
 
 " Fixes: https://github.com/neovim/neovim/issues/5990
 let $VTE_VERSION="100"

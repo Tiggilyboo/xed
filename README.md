@@ -24,7 +24,5 @@ $ xed -c Dev somefile
 ```
 Opens a left split 22% wide showing the current directory in netrw, opens in the main right split. There is also a bottom split terminal opened to the invoked directory.
 
-## Go
-Preconfigured plugins:
-- 
-
+## Plugins
+See xed.vim plugin section
