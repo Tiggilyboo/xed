@@ -9,6 +9,7 @@ echo "Killing xfce4, starting i3..."
 sudo pkill xfwm4
 sudo pkill xfdesktop
 sudo pkill xfce4-panel
+sudo pkill i3
 
 DIR="$(dirname "$(readlink -f "$0")")"
 xrandr --dpi 231

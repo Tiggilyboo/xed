@@ -30,6 +30,7 @@ let g:netrw_liststyle = 3
 let mpwd = xedp . '/plugged'
 let mgocode = xedp . '/plugged/gocode/nvim/symlink.sh'
 call plug#begin(mpwd)
+  " themes
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'joshdick/onedark.vim'
@@ -43,22 +44,24 @@ call plug#begin(mpwd)
 
   " go
   Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': mgocode } 
-  Plug 'zchee/deoplete-go', { 'do': 'make'}
-  Plug 'fatih/vim-go', { 'for': 'go' }
-  "Plug 'sebdah/vim-delve', { 'for': 'go' }
+  Plug 'zchee/deoplete-go', { 'do': 'make' }
+  Plug 'sebdah/vim-delve', { 'for': 'go' }
+
+  " dart
+  Plug 'dart-lang/dart-vim-plugin'
 
   " ts
   Plug 'mhartington/nvim-typescript'
   Plug 'HerringtonDarkholme/yats.vim'
 
   " sql
-  Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
+  Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 
   " html / css
-  Plug 'mattn/emmet-vim', { 'for': ['html','htm','css','scss'] }
+  Plug 'mattn/emmet-vim'
 
   " cshtml
-  Plug 'adamclerk/vim-razor', { 'for': ['cshtml'] }
+  Plug 'adamclerk/vim-razor', { 'for': 'cshtml' }
 call plug#end()
 
 " themes
@@ -103,10 +106,20 @@ set guicursor=
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,cshtml EmmetInstall
 
+" dart
+let dart_html_in_string=v:true
+let dart_style_guide = 2
+
+" remaps
+tnoremap <Esc> <C-\><C-n>
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
 " Workspaces
 function! DevWorkspace()
   let g:netrw_list_hide = netrw_gitignore#Hide()
-
   execute ":Vexplore"
   normal! gg
   wincmd l
@@ -115,7 +128,7 @@ function! DevWorkspace()
   terminal
   file Console
   resize 10
-  tnoremap <Esc> <C-\><C-n>
+  
   wincmd k
 endfunction
 command! -register Dev call DevWorkspace()
