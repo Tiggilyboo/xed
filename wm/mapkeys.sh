@@ -1,0 +1,6 @@
+xmodmap -e "keycode 67 = XF86Back"
+xmodmap -e "keycode 68 = XF86Forward"
+xmodmap -e "keycode 72 = XF86AudioLowerVolume"
+xmodmap -e "keycode 73 = XF86AudioRaiseVolume"
+xmodmap -e "keycode 76 = XF86MonBrightnessUp"
+xmodmap -e "keycode 75 = XF86MonBrightnessDown"
